@@ -1,29 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    
+    <template id="remove_company_address" inherit_id="web.external_layout_striped">
+        <xpath expr="//div[@name='company_address']" position="replace"/>
+    </template>
+
     <template id="sale_order_report_custom" inherit_id="sale.report_saleorder_document">
+        
+        <xpath expr="//t[@t-set='forced_vat']" position="replace"/>
+        <xpath expr="//t[@t-set='address']" position="replace"/>
+        <xpath expr="//t[@t-set='information_block']" position="replace"/>
+
         <div class="page" position="inside">
             <strong>Métodos de Pago Disponibles</strong>
             <table style="width: 50%; border:1px solid transparent; font-size: 12px;">
                 <tbody>
-                    <tr t-foreach="doc.get_payment_methods()" t-as="method">
-                        <td style="padding: 8px; border: 1px solid #ddd;">
-                            <span t-esc="', '.join([currency.symbol for currency in method.supported_currency_ids])"/>
+                    <tr>
+                        <td>
+                            <strong>BI</strong>
                         </td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">
-                            <span t-field="method.name"/>
+                        <td>
+                            <strong>
+                                Q
+                            </strong>
                         </td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">
-                            <span t-field="method.code"/>
+                        <td>
+                            GRUPO DIRECTO 092-000883-6
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>BAC</strong>
+                        </td>
+                        <td>
+                            <strong>
+                                Q
+                            </strong>
+                        </td>
+                        <td>
+                            GRUPO DIRECTO 902156785
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>BI</strong>
+                        </td>
+                        <td>
+                            <strong>
+                                $
+                            </strong>
+                        </td>
+                        <td>
+                             ZIMATEX S.A 004-004937-9
+                        </td>
+                    </tr>
+                    <tr text-align="center">
+                        <td colspan="3" style="text-align:center">
+                            ✔ VISALINK
                         </td>
                     </tr>
                 </tbody>
             </table>
             <br/>
-            <div style="width:100%; text-align:center">
-                <strong>OBSERVACIONES: DESCUENTO APLICA UNICAMENTE EN PAGO CON TRANSFERENCIA. </strong><br/>
-                Al aprobar este contrato estará aceptando las especificaciones del mismo. No se aceptan devoluciones de la mercadería. Por favor revisar cuidadosamente cada articulo. No hay devolución en telas cortadas. Las telas dependiendo de su
-                composición pueden encoger hasta un 5%, recomendamos pré-lavarlas antes de confeccionarlas si son fibras naturales
-            </div>
+            <xpath expr="//div[hasclass('footer')]" position="before">
+                <div class="terms-conditions" style="page-break-inside: avoid; width:100%; text-align:center; font-size: 10px; margin: 20px 0 15px 0; padding: 10px; background: #f9f9f9; border-top: 1px dashed #ccc; border-bottom: 1px dashed #ccc;">
+                    <strong>OBSERVACIONES: DESCUENTO APLICA ÚNICAMENTE EN PAGO CON TRANSFERENCIA.</strong><br/>
+                    Al aprobar este contrato estará aceptando las especificaciones del mismo. No se aceptan devoluciones de la mercadería. 
+                    Por favor revisar cuidadosamente cada artículo. No hay devolución en telas cortadas. Las telas dependiendo de su
+                    composición pueden encoger hasta un 5%, recomendamos pré-lavarlas antes de confeccionarlas si son fibras naturales.
+                </div>
+            </xpath>
         </div>
         <xpath expr="//div[hasclass('page')]" position="after">
             <div class="footer">
