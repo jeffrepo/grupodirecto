@@ -1,29 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <template id="external_layout_striped_logo_right" inherit_id="web.external_layout_striped">
+        <xpath expr="//div[@class='d-flex']" position="replace">
+            <div class="d-flex justify-content-between align-items-start">
+                <!-- Contenido izquierdo -->
+                <div>
+                    <div t-if="company.report_header" t-field="company.report_header" class="o_company_tagline fw-bold mt-2">Company tagline</div>
+                </div>
+                
+                <!-- Logo a la derecha -->
+                <div class="text-end">
+                    <img t-if="company.logo" class="o_company_logo_big" t-att-src="image_data_uri(company.logo)" alt="Logo"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    
+    <template id="custom_external_layout" inherit_id="web.external_layout_wave">
+        <xpath expr="//div[contains(@class, 'text-end') and contains(@class, 'w-50')]" position="replace"/>
+    </template>
+
+
     <template id="sale_order_report_custom" inherit_id="sale.report_saleorder_document">
+        
+        <xpath expr="//t[@t-set='forced_vat']" position="replace"/>
+        <xpath expr="//t[@t-set='address']" position="replace"/>
+        <xpath expr="//t[@t-set='information_block']" position="replace"/>
+
+        <!-- Eliminar la variable is_proforma -->
+        <xpath expr="//t[@t-set='is_proforma']" position="replace"/>
+        
+        <!-- Eliminar el bloque del título del documento -->
+        <xpath expr="//t[@t-set='layout_document_title']" position="replace"/>
+
+        <xpath expr="//table[@class='o_has_total_table table o_main_table table-borderless']" position="replace"/>
+
+        <xpath expr="//div[@name='so_total_summary']" position="replace"/>
+
         <div class="page" position="inside">
+            
+            <!-- Agregar información del cliente y número de orden antes de la tabla -->
+            <div class="row mb-3">
+                <div class="col" name="sale_order_name">
+                    <strong>Número de orden</strong>
+                    <div t-field="doc.name">SO0000</div>
+                </div>
+
+                <div class="col" name="customer_name">
+                    <strong>Cliente</strong>
+                    <div t-field="doc.partner_id" t-options="{'widget': 'contact', 'fields': ['name', 'company_name'], 'no_marker': True}"/>
+                    <t t-esc="doc.partner_id.phone or doc.partner_id.mobile"/>
+                    <div t-field="doc.partner_shipping_id" t-options="{'widget': 'contact', 'fields': ['address'], 'no_marker': True, 'phone_icons': True}"/>    
+                </div>
+            </div>
+            
+            <!-- <xpath expr="//table[@class='o_has_total_table table o_main_table table-borderless']" position="replace"> -->
+                <!-- Nueva tabla simplificada -->
+            <table class="o_has_total_table table o_main_table table-borderless">
+                <thead style="display: table-row-group">
+                    <tr>
+                        <th name="th_description" class="text-start">Description</th>
+                        <th name="th_quantity" class="text-end text-nowrap">Quantity</th>
+                        <th name="th_priceunit" class="text-end text-nowrap">Unit Price</th>
+                        <th name="th_subtotal" class="text-end">Amount</th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody">
+                    <t t-set="current_subtotal" t-value="0"/>
+                    <t t-foreach="lines_to_report" t-as="line">
+                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
+                        <tr t-att-class="'fw-bold o_line_section' if (line.display_type == 'line_section' or line.product_type == 'combo') else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                            <t t-if="not line.display_type and line.product_type != 'combo'">
+                                <td name="td_name"><span t-field="line.name">Bacon Burger</span></td>
+                                <td name="td_quantity" class="o_td_quantity text-end">
+                                    <span t-field="line.product_uom_qty" class="text-nowrap">3</span>
+                                    <span t-field="line.product_uom">units</span>
+                                    <span t-if="line.product_packaging_id">
+                                        (<span t-field="line.product_packaging_qty" t-options="{&quot;widget&quot;: &quot;integer&quot;}"/> <span t-field="line.product_packaging_id"/>)
+                                    </span>
+                                </td>
+                                <td name="td_priceunit" class="text-end text-nowrap">
+                                    <span t-field="line.price_unit">3</span>
+                                </td>
+                                <td t-if="not line.is_downpayment" name="td_subtotal" class="text-end o_price_total">
+                                    <span t-field="line.price_subtotal">27.00</span>
+                                </td>
+                            </t>
+                            <t t-elif="line.display_type == 'line_section' or line.product_type == 'combo'">
+                                <td name="td_section_line" colspan="4">
+                                    <span t-field="line.name">A section title</span>
+                                </td>
+                                <t t-set="current_section" t-value="line"/>
+                                <t t-set="current_subtotal" t-value="0"/>
+                            </t>
+                            <t t-elif="line.display_type == 'line_note'">
+                                <td name="td_note_line" colspan="4">
+                                    <span t-field="line.name">A note, whose content usually applies to the section or product above.</span>
+                                </td>
+                            </t>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <div class="clearfix" name="so_total_summary">
+                <div id="total" class="row mt-n3" name="total">
+                    <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
+                        <table class="o_total_table table table-borderless">
+                            <!-- Tax totals -->
+                            <t t-call="sale.document_tax_totals">
+                                <t t-set="tax_totals" t-value="doc.tax_totals"/>
+                                <t t-set="currency" t-value="doc.currency_id"/>
+                            </t>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <!-- </xpath> -->
+
+
             <strong>Métodos de Pago Disponibles</strong>
             <table style="width: 50%; border:1px solid transparent; font-size: 12px;">
                 <tbody>
-                    <tr t-foreach="doc.get_payment_methods()" t-as="method">
-                        <td style="padding: 8px; border: 1px solid #ddd;">
-                            <span t-esc="', '.join([currency.symbol for currency in method.supported_currency_ids])"/>
+                    <tr>
+                        <td>
+                            <strong>BI</strong>
                         </td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">
-                            <span t-field="method.name"/>
+                        <td>
+                            <strong>
+                                Q
+                            </strong>
                         </td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">
-                            <span t-field="method.code"/>
+                        <td>
+                            GRUPO DIRECTO 092-000883-6
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>BAC</strong>
+                        </td>
+                        <td>
+                            <strong>
+                                Q
+                            </strong>
+                        </td>
+                        <td>
+                            GRUPO DIRECTO 902156785
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>BI</strong>
+                        </td>
+                        <td>
+                            <strong>
+                                $
+                            </strong>
+                        </td>
+                        <td>
+                             ZIMATEX S.A 004-004937-9
+                        </td>
+                    </tr>
+                    <tr text-align="center">
+                        <td colspan="3" style="text-align:center">
+                            ✔ VISALINK
                         </td>
                     </tr>
                 </tbody>
             </table>
             <br/>
-            <div style="width:100%; text-align:center">
-                <strong>OBSERVACIONES: DESCUENTO APLICA UNICAMENTE EN PAGO CON TRANSFERENCIA. </strong><br/>
-                Al aprobar este contrato estará aceptando las especificaciones del mismo. No se aceptan devoluciones de la mercadería. Por favor revisar cuidadosamente cada articulo. No hay devolución en telas cortadas. Las telas dependiendo de su
-                composición pueden encoger hasta un 5%, recomendamos pré-lavarlas antes de confeccionarlas si son fibras naturales
+            <!-- <xpath expr="//div[hasclass('footer')]" position="before">
+                <div class="terms-conditions" style="page-break-inside: avoid; width:100%; text-align:center; font-size: 10px; margin: 20px 0 15px 0; padding: 10px; background: #f9f9f9; border-top: 1px dashed #ccc; border-bottom: 1px dashed #ccc;">
+                    <strong>OBSERVACIONES: DESCUENTO APLICA ÚNICAMENTE EN PAGO CON TRANSFERENCIA.</strong><br/>
+                    Al aprobar este contrato estará aceptando las especificaciones del mismo. No se aceptan devoluciones de la mercadería. 
+                    Por favor revisar cuidadosamente cada artículo. No hay devolución en telas cortadas. Las telas dependiendo de su
+                    composición pueden encoger hasta un 5%, recomendamos pré-lavarlas antes de confeccionarlas si son fibras naturales.
+                </div>
+            </xpath> -->
+
+            <p style="page-break-before: always"/>
+            <div style="width:100%; text-align:center"><strong> CLAÚSULAS DE ENTREGA DE MUEBLES – BAZZAR FABRICS </strong></div><br/>
+            <div style="width:100%; text-align:center"> Al aprobar este contrato, el cliente acepta las especificaciones detalladas.<br/>
+            No se aceptan devoluciones de muebles fabricados. Tampoco se aceptan devoluciones de telas cortadas.<br/>
+            Estas pueden encoger hasta un 5% según su composición.<br/>
+            Por favor, revise cuidadosamente cada artículo antes de confirmar. </div><br/><br/>
+
+            <div style="width:100%;">
+                <p>
+                    <strong>CONDICIONES DE ENTREGA </strong><br/><br/>
+                    <strong>A)</strong> El cliente (o su decorador / arquitecto) es reponsable de verificar que las medidas del mueble permitan su ingreso al inmueble <br/><br/>
+                    <strong>B)</strong> También debe confirmar que los accesos (puertas, pasillos, elevadores) sean adecuados para el ingreso sin dañar los muebles.<br/><br/>
+                    <strong>C)</strong> Las entregas se realizaran en el <strong>lobby</strong> o primer nivel si no hay elevador de carga habilitado. <br/><br/>
+    
+                    <strong>D)</strong> Si la entrega es en apartamento, asegurese de que el mueble quepa en el elevador.<strong> No esta permitido subir muebles por gradas, ventanas o sobre el elevador </strong>. Si no es posible ingresarlo, se dejara en el lobby.<br/><br/>
+
+                    <strong>E)</strong> Nuestro personal <strong>no manipulará muebles que no sean de Bazzar, por seguridad.</strong><br/><br/>
+                    <strong>F)</strong> El área de entrega debe estar libre y accesible. El equipo tiene un tiempo estimado de 30-40 minutos por entrega.<br/><br/>
+                </p>
+                </div>
+                
+                <div style="width:100%;text-align:center">Agradecemos su preferencia y le pedimos tomar en cuenta estas condiciones para asegurar una entrega exitosa.<br/><br/><br/><br/>
+                
+                <div style="width: 100%; text-align: center;">
+                    <hr style="color: gray; width: 50%; margin: auto;"/>
+                    Firma del cliente
+                </div>
+
             </div>
+
         </div>
         <xpath expr="//div[hasclass('page')]" position="after">
             <div class="footer">
