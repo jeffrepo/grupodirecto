@@ -17,9 +17,9 @@
         </xpath>
     </template>
     
-    <template id="custom_external_layout" inherit_id="web.external_layout_wave">
+    <!-- <template id="custom_external_layout" inherit_id="web.external_layout_wave">
         <xpath expr="//div[contains(@class, 'text-end') and contains(@class, 'w-50')]" position="replace"/>
-    </template>
+    </template> -->
 
 
     <template id="sale_order_report_custom" inherit_id="sale.report_saleorder_document">
@@ -60,6 +60,7 @@
             <table class="o_has_total_table table o_main_table table-borderless">
                 <thead style="display: table-row-group">
                     <tr>
+                        <th name="th_image" class="text-start"></th>
                         <th name="th_description" class="text-start">Description</th>
                         <th name="th_quantity" class="text-end text-nowrap">Quantity</th>
                         <th name="th_priceunit" class="text-end text-nowrap">Unit Price</th>
@@ -72,6 +73,11 @@
                         <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
                         <tr t-att-class="'fw-bold o_line_section' if (line.display_type == 'line_section' or line.product_type == 'combo') else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
                             <t t-if="not line.display_type and line.product_type != 'combo'">
+                                <td>
+                                    <t t-if="line.product_image">
+                                        <img class="img-fluid" t-if="line.product_id.image_1920" t-att-src="image_data_uri(line.product_id.image_1920)" alt="Product img" style="max-width: 50px; max-height: 50px;"/>
+                                    </t>                                    
+                                </td>
                                 <td name="td_name"><span t-field="line.name">Bacon Burger</span></td>
                                 <td name="td_quantity" class="o_td_quantity text-end">
                                     <span t-field="line.product_uom_qty" class="text-nowrap">3</span>
@@ -119,9 +125,14 @@
             <br/>
             <!-- </xpath> -->
 
-
-            <strong>Métodos de Pago Disponibles</strong>
             <table style="width: 50%; border:1px solid transparent; font-size: 12px;">
+                <thead>
+                    <tr>
+                        <th colspan="3">
+                            <strong>Métodos de Pago Disponibles</strong>
+                        </th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <td>
