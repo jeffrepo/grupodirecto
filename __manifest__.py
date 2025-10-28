@@ -24,8 +24,12 @@ Long description of module's purpose
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        'reports/purchase_order_report_inherit.xml',
+        'reports/report_purchasequotation_document_inherit.xml',
         'reports/sale_order_template.xml',
         'views/product_template_views.xml',
+        'views/purchase_order_views.xml',
+        'views/sale_order_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

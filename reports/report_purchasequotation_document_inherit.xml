@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="purchase_quotation_report_inherit" inherit_id="purchase.report_purchasequotation_document">
+            
+            <!-- Agregar la columna de imagen en el header -->
+            <xpath expr="//thead/tr/th[@name='th_description']" position="before">
+                <th name="th_image" class="text-center"><strong>Imagen</strong></th>
+            </xpath>
+
+            <!-- Agregar la celda de imagen en líneas normales -->
+            <xpath expr="//tr[not(hasclass('o_line_section')) and not(hasclass('o_line_note'))]//td[@id='product']" position="before">
+                <td class="text-center">
+                    <t t-if="order_line.product_image">
+                        <img t-att-src="'data:image/png;base64,' + order_line.product_image.decode('utf-8')"
+                             style="max-width: 50px; max-height: 50px; object-fit: contain;" 
+                             class="img-fluid" 
+                             alt="Product Image"/>
+                    </t>
+                </td>
+            </xpath>
+
+        </template>
+    </data>
+</odoo>
