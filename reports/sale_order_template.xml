@@ -28,6 +28,7 @@
         <xpath expr="//t[@t-set='address']" position="replace"/>
         <xpath expr="//t[@t-set='information_block']" position="replace"/>
         <xpath expr="//div[span[@t-field='doc.note']]" position="replace"/>
+        <xpath expr="//div[@name='signature']" position="replace"/>
 
         <!-- Eliminar la variable is_proforma -->
         <xpath expr="//t[@t-set='is_proforma']" position="replace"/>
@@ -47,7 +48,10 @@
                     <strong>Número de orden</strong>
                     <div t-field="doc.name">SO0000</div>
                 </div>
-
+                <div class="col" name="sale_order_name">
+                    <strong>Teléfono</strong>
+                    <div t-field="doc.company_id.phone"></div>
+                </div>
                 <div class="col" name="customer_name">
                     <strong>Cliente</strong>
                     <div t-field="doc.partner_id" t-options="{'widget': 'contact', 'fields': ['name', 'company_name'], 'no_marker': True}"/>
@@ -62,10 +66,10 @@
                 <thead style="display: table-row-group">
                     <tr>
                         <th name="th_image" class="text-start"></th>
-                        <th name="th_description" class="text-start">Description</th>
-                        <th name="th_quantity" class="text-end text-nowrap">Quantity</th>
-                        <th name="th_priceunit" class="text-end text-nowrap">Unit Price</th>
-                        <th name="th_subtotal" class="text-end">Amount</th>
+                        <th name="th_description" class="text-start">Descripción</th>
+                        <th name="th_quantity" class="text-end text-nowrap">Cantidad</th>
+                        <th name="th_priceunit" class="text-end text-nowrap">Precio unitario</th>
+                        <th name="th_subtotal" class="text-end">Total</th>
                     </tr>
                 </thead>
                 <tbody class="sale_tbody">
@@ -76,7 +80,7 @@
                             <t t-if="not line.display_type and line.product_type != 'combo'">
                                 <td>
                                     <t t-if="line.product_image">
-                                        <img class="img-fluid" t-if="line.product_id.image_1920" t-att-src="image_data_uri(line.product_id.image_1920)" alt="Product img" style="max-width: 50px; max-height: 50px;"/>
+                                        <img class="img-fluid" t-if="line.product_id.image_1920" t-att-src="image_data_uri(line.product_id.image_1920)" alt="Product img" style="max-width: 140px; max-height: 140px;"/>
                                     </t>                                    
                                 </td>
                                 <td name="td_name"><span t-field="line.name">Bacon Burger</span></td>
@@ -110,6 +114,7 @@
                     </t>
                 </tbody>
             </table>
+            <br/>
             <div class="clearfix" name="so_total_summary">
                 <div id="total" class="row mt-n3" name="total">
                     <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
@@ -184,7 +189,7 @@
             <br/>
 
             
-            <div class="mt-4" name="custom_notes_section">
+            <!-- <div class="mt-4" name="custom_notes_section">
                 <t t-if="doc.note or doc.payment_term_id.note or (doc.fiscal_position_id and doc.fiscal_position_id.sudo().note)">
                     <h6><strong>Notas y condiciones</strong></h6>
                     <div>
@@ -196,6 +201,18 @@
                         </p>
                     </div>
                 </t>
+            </div> -->
+            <div t-if="not doc.signature" class="oe_structure"/>
+            <div t-else="" class="mt-4 ml64 mr4" name="signature">
+                <div class="offset-8">
+                    <strong>Signature</strong>
+                </div>
+                <div class="offset-8">
+                    <img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>
+                </div>
+                <div class="offset-8 text-center">
+                    <span t-field="doc.signed_by">Oscar Morgan</span>
+                </div>
             </div>
             
             <!-- <xpath expr="//div[hasclass('footer')]" position="before">
@@ -242,6 +259,9 @@
             <div class="footer">
                 <hr style="border:2px solid black"/>
                 <div style="width:100%;">
+                    <!-- <div style="width:33%; float:left; text-align:center">
+                        <t t-esc="doc.company_id.phone" />
+                    </div> -->
                     <div style="width:50%; float:left; text-align:center">
                         <t t-esc="doc.company_id.website" />
                     </div>
