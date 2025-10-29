@@ -12,10 +12,7 @@
             <xpath expr="//tr[not(hasclass('o_line_section')) and not(hasclass('o_line_note'))]//td[@id='product']" position="before">
                 <td class="text-center">
                     <t t-if="line.product_image">
-                        <img t-att-src="'data:image/png;base64,' + line.product_image.decode('utf-8')" 
-                             style="max-width: 50px; max-height: 50px; object-fit: contain;" 
-                             class="img-fluid" 
-                             alt="Product Image"/>
+                        <img t-att-src="image_data_uri(line.product_id.image_1920)" style="max-width:140px; max-height:140px"/>
                     </t>
                 </td>
             </xpath>

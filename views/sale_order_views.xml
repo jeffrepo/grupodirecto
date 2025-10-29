@@ -5,7 +5,7 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="after">
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_template_id']" position="before">
                 <field name="product_image" widget="image" class="oe_avatar" 
                    options="{'preview_image': 'product_image', 'size': [240, 426]}"/>
             </xpath>
