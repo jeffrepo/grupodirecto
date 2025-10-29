@@ -28,6 +28,7 @@
         <xpath expr="//t[@t-set='address']" position="replace"/>
         <xpath expr="//t[@t-set='information_block']" position="replace"/>
         <xpath expr="//div[span[@t-field='doc.note']]" position="replace"/>
+        <xpath expr="//div[@name='signature']" position="replace"/>
 
         <!-- Eliminar la variable is_proforma -->
         <xpath expr="//t[@t-set='is_proforma']" position="replace"/>
@@ -242,10 +243,13 @@
             <div class="footer">
                 <hr style="border:2px solid black"/>
                 <div style="width:100%;">
-                    <div style="width:50%; float:left; text-align:center">
+                    <div style="width:33%; float:left; text-align:center">
+                        <t t-esc="doc.company_id.phone" />
+                    </div>
+                    <div style="width:33%; float:left; text-align:center">
                         <t t-esc="doc.company_id.website" />
                     </div>
-                    <div style="width:50%; float:right; text-align:center">
+                    <div style="width:34%; float:right; text-align:center">
                         <t t-esc="doc.company_id.email" />
                     </div>
                 </div>
