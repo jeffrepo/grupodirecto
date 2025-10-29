@@ -194,10 +194,6 @@
                         <p t-if="not is_html_empty(doc.payment_term_id.note)">
                             <span t-field="doc.payment_term_id.note"/>
                         </p>
-                        <p t-if="doc.fiscal_position_id and not is_html_empty(doc.fiscal_position_id.sudo().note)">
-                            <strong>Observación fiscal:</strong>
-                            <span t-field="doc.fiscal_position_id.sudo().note"/>
-                        </p>
                     </div>
                 </t>
             </div>
