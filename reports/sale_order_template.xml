@@ -29,6 +29,7 @@
         <xpath expr="//t[@t-set='information_block']" position="replace"/>
         <xpath expr="//div[span[@t-field='doc.note']]" position="replace"/>
         <xpath expr="//div[@name='signature']" position="replace"/>
+        <xpath expr="//div[@id='informations']" position="replace"/>
 
         <!-- Eliminar la variable is_proforma -->
         <xpath expr="//t[@t-set='is_proforma']" position="replace"/>
@@ -42,22 +43,51 @@
 
         <div class="page" position="inside">
             
+            <div class="row mb-4" id="informations_2">
+                <div t-if="doc.date_order" class="col" name="informations_date">
+                    <strong t-if="is_proforma">Fecha de emisión</strong>
+                    <strong t-elif="doc.state in ['draft', 'sent']">Fecha de la orden</strong>
+                    <strong t-else="">Fecha de pedido</strong>
+                    <div t-field="doc.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;}">2023-12-31</div>
+                </div>
+                <div t-if="doc.user_id.name" class="col">
+                    <strong>Vendedor</strong>
+                    <div t-field="doc.user_id">Mitchell Admin</div>
+                </div>
+                <div t-if="doc.client_order_ref" class="col" name="informations_reference">
+                    <strong>Tu referencia</strong>
+                    <div t-field="doc.client_order_ref">SO0000</div>
+                </div>
+                <div t-if="doc.validity_date and doc.state in ['draft', 'sent']" class="col" name="expiration_date">
+                    <strong>Expira</strong>
+                    <div t-field="doc.validity_date">2023-12-31</div>
+                </div>
+            </div>
+
             <!-- Agregar información del cliente y número de orden antes de la tabla -->
-            <div class="row mb-3">
+            <div class="row mb-4">
                 <div class="col" name="sale_order_name">
                     <strong>Número de orden</strong>
                     <div t-field="doc.name">SO0000</div>
                 </div>
-                <div class="col" name="sale_order_name">
-                    <strong>Teléfono</strong>
-                    <div t-field="doc.company_id.phone"></div>
-                </div>
+                <t t-if="doc.validity_date and doc.state in ['draft', 'sent']">
+                    <div class="col" name="customer_name_2" style="color: white">
+                        <strong>____</strong>
+                    </div>
+                </t>
+                
                 <div class="col" name="customer_name">
                     <strong>Cliente</strong>
                     <div t-field="doc.partner_id" t-options="{'widget': 'contact', 'fields': ['name', 'company_name'], 'no_marker': True}"/>
                     <t t-esc="doc.partner_id.phone or doc.partner_id.mobile"/>
                     <div t-field="doc.partner_shipping_id" t-options="{'widget': 'contact', 'fields': ['address'], 'no_marker': True, 'phone_icons': True}"/>    
                 </div>
+                
+                <div class="col" name="sale_order_name">
+                    <strong>Teléfono</strong>
+                    <div t-field="doc.company_id.phone"></div>
+                </div>
+                
             </div>
             
             <!-- <xpath expr="//table[@class='o_has_total_table table o_main_table table-borderless']" position="replace"> -->
@@ -130,90 +160,84 @@
             </div>
             <br/>
             <!-- </xpath> -->
-
-            <table style="width: 50%; border:1px solid transparent; font-size: 12px;">
-                <thead>
-                    <tr>
-                        <th colspan="3">
-                            <strong>Métodos de Pago Disponibles</strong>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <strong>BI</strong>
-                        </td>
-                        <td>
-                            <strong>
-                                Q
-                            </strong>
-                        </td>
-                        <td>
-                            GRUPO DIRECTO 092-000883-6
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>BAC</strong>
-                        </td>
-                        <td>
-                            <strong>
-                                Q
-                            </strong>
-                        </td>
-                        <td>
-                            GRUPO DIRECTO 902156785
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>BI</strong>
-                        </td>
-                        <td>
-                            <strong>
-                                $
-                            </strong>
-                        </td>
-                        <td>
-                             ZIMATEX S.A 004-004937-9
-                        </td>
-                    </tr>
-                    <tr text-align="center">
-                        <td colspan="3" style="text-align:center">
-                            ✔ VISALINK
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <br/>
-
-            
-            <!-- <div class="mt-4" name="custom_notes_section">
-                <t t-if="doc.note or doc.payment_term_id.note or (doc.fiscal_position_id and doc.fiscal_position_id.sudo().note)">
-                    <h6><strong>Notas y condiciones</strong></h6>
-                    <div>
-                        <span t-field="doc.note"
-                            t-attf-style="#{'text-align:justify;text-justify:inter-word;' if doc.company_id.terms_type != 'html' else ''}"
-                            name="order_note"/>
-                        <p t-if="not is_html_empty(doc.payment_term_id.note)">
-                            <span t-field="doc.payment_term_id.note"/>
-                        </p>
+            <div style="width:100%">
+                <div style="width:50%; float:left">
+                    <table style="width: 100%; border:1px solid transparent; font-size: 12px;">
+                        <thead>
+                            <tr>
+                                <th colspan="3">
+                                    <strong>Métodos de Pago Disponibles</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>BI</strong>
+                                </td>
+                                <td>
+                                    <strong>
+                                        Q
+                                    </strong>
+                                </td>
+                                <td>
+                                    GRUPO DIRECTO 092-000883-6
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>BAC</strong>
+                                </td>
+                                <td>
+                                    <strong>
+                                        Q
+                                    </strong>
+                                </td>
+                                <td>
+                                    GRUPO DIRECTO 902156785
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>BI</strong>
+                                </td>
+                                <td>
+                                    <strong>
+                                        $
+                                    </strong>
+                                </td>
+                                <td>
+                                    ZIMATEX S.A 004-004937-9
+                                </td>
+                            </tr>
+                            <tr text-align="center">
+                                <td colspan="3" style="text-align:center">
+                                    ✔ VISALINK
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="float:right; width:50%">
+                    <div t-if="not doc.signature" class="oe_structure"/>
+                    <div t-else="" name="signature">
+                        <div style="text-align:center">
+                            <strong>Firma</strong>
+                        </div>
+                        <div class="text-center">
+                            <img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>
+                        </div>
+                        <div class="text-center">
+                            <span t-field="doc.signed_by">Oscar Morgan</span>
+                        </div>
                     </div>
-                </t>
-            </div> -->
-            <div t-if="not doc.signature" class="oe_structure"/>
-            <div t-else="" class="mt-4 ml64 mr4" name="signature">
-                <div class="offset-8">
-                    <strong>Signature</strong>
                 </div>
-                <div class="offset-8">
-                    <img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>
-                </div>
-                <div class="offset-8 text-center">
-                    <span t-field="doc.signed_by">Oscar Morgan</span>
-                </div>
+                
             </div>
+            
+            <br/>
+            
+            
             
             <!-- <xpath expr="//div[hasclass('footer')]" position="before">
                 <div class="terms-conditions" style="page-break-inside: avoid; width:100%; text-align:center; font-size: 10px; margin: 20px 0 15px 0; padding: 10px; background: #f9f9f9; border-top: 1px dashed #ccc; border-bottom: 1px dashed #ccc;">

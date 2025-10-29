@@ -19,16 +19,18 @@ Long description of module's purpose
     'license': 'LGPL-3',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale'],
+    'depends': ['base', 'sale', 'stock'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        'views/sale_menus.xml',
         'reports/purchase_order_report_inherit.xml',
         'reports/report_purchasequotation_document_inherit.xml',
         'reports/sale_order_template.xml',
         'views/product_template_views.xml',
         'views/purchase_order_views.xml',
+        
         'views/sale_order_views.xml',
     ],
     # only loaded in demonstration mode
