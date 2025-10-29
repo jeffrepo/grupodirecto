@@ -27,6 +27,7 @@
         <xpath expr="//t[@t-set='forced_vat']" position="replace"/>
         <xpath expr="//t[@t-set='address']" position="replace"/>
         <xpath expr="//t[@t-set='information_block']" position="replace"/>
+        <xpath expr="//div[span[@t-field='doc.note']]" position="replace"/>
 
         <!-- Eliminar la variable is_proforma -->
         <xpath expr="//t[@t-set='is_proforma']" position="replace"/>
@@ -181,6 +182,22 @@
                 </tbody>
             </table>
             <br/>
+
+            
+            <div class="mt-4" name="custom_notes_section">
+                <t t-if="doc.note or doc.payment_term_id.note or (doc.fiscal_position_id and doc.fiscal_position_id.sudo().note)">
+                    <h6><strong>Notas y condiciones</strong></h6>
+                    <div>
+                        <span t-field="doc.note"
+                            t-attf-style="#{'text-align:justify;text-justify:inter-word;' if doc.company_id.terms_type != 'html' else ''}"
+                            name="order_note"/>
+                        <p t-if="not is_html_empty(doc.payment_term_id.note)">
+                            <span t-field="doc.payment_term_id.note"/>
+                        </p>
+                    </div>
+                </t>
+            </div>
+            
             <!-- <xpath expr="//div[hasclass('footer')]" position="before">
                 <div class="terms-conditions" style="page-break-inside: avoid; width:100%; text-align:center; font-size: 10px; margin: 20px 0 15px 0; padding: 10px; background: #f9f9f9; border-top: 1px dashed #ccc; border-bottom: 1px dashed #ccc;">
                     <strong>OBSERVACIONES: DESCUENTO APLICA ÚNICAMENTE EN PAGO CON TRANSFERENCIA.</strong><br/>
