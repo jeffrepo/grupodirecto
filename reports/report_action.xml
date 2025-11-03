@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+        <!-- imprimiendo de forma horizontal -->
+        <record id="custom_pos_order_paperformat_grupodirecto" model="report.paperformat">
+            <field name="name">Custom Pos Order Format Landscape</field>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="header_spacing">52</field>
+            <field name="dpi">90</field>
+            <field name="margin_top">52</field>
+            <field name="margin_bottom">32</field>
+            <field name="margin_left">20</field>
+            <field name="margin_right">20</field>
+        </record>
+
+        <record id="action_custom_sale_order_format" model="ir.actions.report">
+            <field name="name">Plantilla Cotización personalizada</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">grupodirecto.sale_order_custom_report_pdf</field>
+            <field name="report_file">grupodirecto.sale_order_custom_report_pdf</field>
+            <field name="paperformat_id" ref="custom_pos_order_paperformat_grupodirecto"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>      
+
+    </data>
+</odoo>
