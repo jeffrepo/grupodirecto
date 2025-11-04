@@ -16,7 +16,7 @@
         </record>
 
         <record id="action_custom_sale_order_format" model="ir.actions.report">
-            <field name="name">Plantilla Cotización personalizada</field>
+            <field name="name">Cotización Bazzar</field>
             <field name="model">sale.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">grupodirecto.sale_order_custom_report_pdf</field>
