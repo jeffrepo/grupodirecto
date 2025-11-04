@@ -21,7 +21,7 @@
                                 <tr>
                                     <td></td>
                                     <td style="background:#F1F5F9; color:#000000; text-align:center">
-                                        <span t-esc="o.name if o.name else 'PEDIDO DE VENTA'"/>
+                                        Cotización #<span t-esc="o.name if o.name else 'PEDIDO DE VENTA'"/>
                                     </td>
                                 </tr>
                             </table>
@@ -117,7 +117,7 @@
                                                 PRECIO
                                             </strong>
                                         </th>
-                                        <th name="th_discount" t-if="display_discount" class="text-end">
+                                        <th name="th_discount" class="text-end">
                                             <strong>
                                                 <span>DESCUENTO</span>
                                             </strong>                                            
@@ -149,7 +149,7 @@
                                             <td name="td_priceunit" class="text-end text-nowrap">
                                                 <span t-field="line.price_unit">3</span>
                                             </td>
-                                            <td t-if="display_discount" class="text-end">
+                                            <td class="text-end">
                                                 <span t-field="line.discount">-</span>
                                             </td>
                                             <td t-if="not line.is_downpayment" name="td_subtotal" class="text-end o_price_total">
@@ -161,22 +161,85 @@
                                 
                             </table>
                             <br/>
+                            
                             <div class="clearfix" name="so_total_summary">
-                                <div id="total" class="row mt-n3" name="total">
-                                    <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
-                                        <table class="o_total_table table table-borderless">
-                                            <!-- Tax totals -->
-                                            <t t-call="sale.document_tax_totals">
-                                                <t t-set="tax_totals" t-value="o.tax_totals"/>
-                                                <t t-set="currency" t-value="o.currency_id"/>
-                                            </t>
+                                <div style="width:100%; padding:5px">
+                                    <t t-if="o.get_discount()[0] == True">
+                                        <table style="width:40%; border:1px solid Transparent; float:right">
+                                            <thead>
+                                                <tr style="border-bottom:1px solid #000000; border-top:1px solid #000000">
+                                                    <th style="padding:8px">
+                                                        <strong>SUB TOTAL</strong>
+                                                    </th>
+                                                    <th></th>
+                                                    <th class="text-end o_price_total">
+                                                        <t t-esc="o.currency_id.symbol"/> <t t-esc="o.get_discount()[1]"/>
+                                                    </th>
+                                                </tr>
+                                                <tr style="border-bottom:1px solid #000000">
+                                                    <th style="padding:8px">
+                                                        <strong>DESCUENTO</strong>
+                                                    </th>
+                                                    <th>
+                                                        <t t-esc="o.get_discount()[2]"/>%
+                                                    </th>
+                                                    <th class="text-end o_price_total">
+                                                        <span t-field="o.amount_untaxed"/>
+                                                    </th>
+                                                </tr>
+                                                <tr style="background:#000000; color:#FFFFFF">
+                                                    <th style="padding:8px">
+                                                        <strong>TOTAL</strong>
+                                                    </th>
+                                                    <th></th>
+                                                    <th class="text-end o_price_total">
+                                                        <span t-field="o.amount_total"/>
+                                                    </th>
+                                                </tr>
+                                            </thead>
                                         </table>
-                                    </div>
+                                    </t>
+                                    <t t-if="o.get_discount()[0] == False">
+                                        <table style="width:40%; border:1px solid Transparent; float:right">
+                                            <thead>
+                                                <tr style="border-bottom:1px solid #000000; border-top:1px solid #000000">
+                                                    <th style="padding:8px">
+                                                        <strong>SUB TOTAL</strong>
+                                                    </th>
+                                                    <th></th>
+                                                    <th class="text-end o_price_total">
+                                                        <span t-field="o.amount_untaxed"/>
+                                                    </th>
+                                                </tr>
+                                                <tr style="border-bottom:1px solid #000000">
+                                                    <th style="padding:8px">
+                                                        <strong>DESCUENTO</strong>
+                                                    </th>
+                                                    <th>
+                                                        
+                                                    </th>
+                                                    <th class="text-end o_price_total">
+                                                        
+                                                    </th>
+                                                </tr>
+                                                <tr style="background:#000000; color:#FFFFFF">
+                                                    <th style="padding:8px">
+                                                        <strong>TOTAL</strong>
+                                                    </th>
+                                                    <th></th>
+                                                    <th class="text-end o_price_total">
+                                                        <span t-field="o.amount_total"/>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </t>
                                 </div>
                             </div>
-
+                            
+                                    
                             <br/>
-                            <div style="width:100%; text-align:center">
+                            <div style="width:100%; text-align:center; padding:5px">
                                 <p>
                                     OBSERVACIONES: DESCUENTO APLICA UNICAMENTE EN PAGO CON TRANSFERENCIA. 
                                     <br/><br/>
@@ -218,10 +281,10 @@
                         </div>
 
                         <div class="footer">
-                            <p style="font-size:12px; text-align:center">
+                            <div style="width:100%; border:2px solid #000000"/>
+                            <p style="font-size:11px; text-align:center">
                                 <strong>Metodos de pago BI Q | </strong> GRUPO DIRECTO 092-000883-6, <strong>BAC Q | </strong> GRUPO DIRECTO 902156785, <strong>BI $ | </strong> ZIMATEX S.A 004-004937-9, <strong>✔</strong> VISALINK
                             </p>
-                            <div style="width:100%; border:2px solid #000000"/>
                             <table style="width:100%; border:1px solid Transparent">
                                 <tr style="text-align:center">
                                     <td>
