@@ -167,7 +167,7 @@
                                     <t t-if="o.get_discount()[0] == True">
                                         <table style="width:40%; border:1px solid Transparent; float:right">
                                             <thead>
-                                                <tr style="border-bottom:1px solid #000000">
+                                                <tr style="border-bottom:1px solid #000000; border-top:1px solid #000000">
                                                     <th style="padding:8px">
                                                         <strong>SUB TOTAL</strong>
                                                     </th>
@@ -202,7 +202,7 @@
                                     <t t-if="o.get_discount()[0] == False">
                                         <table style="width:40%; border:1px solid Transparent; float:right">
                                             <thead>
-                                                <tr style="border-bottom:1px solid #000000">
+                                                <tr style="border-bottom:1px solid #000000; border-top:1px solid #000000">
                                                     <th style="padding:8px">
                                                         <strong>SUB TOTAL</strong>
                                                     </th>
