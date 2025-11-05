@@ -30,7 +30,7 @@
                             <br/>
                         </div>
                         <div class="body">
-                            <table style="width:100%; border:1px solid Transparent">
+                            <table style="width:100%; border:1px solid Transparent; font-size:11px">
                                 <tr style="padding-bottom:15px; padding-top:15px">
                                     <td>
                                         <strong>
@@ -71,7 +71,9 @@
                                         </strong>                                        
                                     </td>
                                     <td>
-
+                                        <strong>
+                                            ASESOR
+                                        </strong>
                                     </td>
                                 </tr>
                                 <tr style="padding-bottom:15px; padding-top:15px">
@@ -81,15 +83,6 @@
                                     <td>
                                         <div t-field="o.partner_shipping_id" t-options="{'widget': 'contact', 'fields': ['address'], 'no_marker': True, 'phone_icons': True}"/>    
                                     </td>
-                                </tr>
-                                <tr style="padding-bottom:15px; padding-top:15px">
-                                    <td>
-                                        <strong>
-                                            ASESOR
-                                        </strong>
-                                    </td>
-                                </tr>
-                                <tr style="padding-bottom:15px; padding-top:15px">
                                     <td>
                                         <t t-esc="o.user_id.name if o.user_id else ''"/>
                                     </td>
@@ -98,7 +91,7 @@
 
                             <br/>
 
-                            <table class="o_has_total_table table o_main_table table-borderless">
+                            <table class="o_has_total_table table o_main_table table-borderless" style="font-size:11px">
                                 <thead style="display: table-row-group">
                                     <tr style="border-bottom: 2px solid #000000">
                                         <th name="th_description" class="text-start">
@@ -141,16 +134,12 @@
                                             </td>
                                             <td name="td_quantity" class="o_td_quantity text-end">
                                                 <span t-field="line.product_uom_qty" class="text-nowrap">3</span>
-                                                <span t-field="line.product_uom">units</span>
-                                                <span t-if="line.product_packaging_id">
-                                                    (<span t-field="line.product_packaging_qty" t-options="{&quot;widget&quot;: &quot;integer&quot;}"/> <span t-field="line.product_packaging_id"/>)
-                                                </span>
                                             </td>
                                             <td name="td_priceunit" class="text-end text-nowrap">
-                                                <span t-field="line.price_unit">3</span>
+                                                <t t-esc="o.currency_id.symbol"/> <span t-field="line.price_unit"/>
                                             </td>
                                             <td class="text-end">
-                                                <span t-field="line.discount">-</span>
+                                                <t t-esc="o.currency_id.symbol"/> <span t-field="line.discount">-</span>
                                             </td>
                                             <td t-if="not line.is_downpayment" name="td_subtotal" class="text-end o_price_total">
                                                 <span t-field="line.price_subtotal">27.00</span>
@@ -165,7 +154,7 @@
                             <div class="clearfix" name="so_total_summary">
                                 <div style="width:100%; padding:5px">
                                     <t t-if="o.get_discount()[0] == True">
-                                        <table style="width:40%; border:1px solid Transparent; float:right">
+                                        <table style="width:40%; border:1px solid Transparent; float:right; font-size:11px">
                                             <thead>
                                                 <tr style="border-bottom:1px solid #000000; border-top:1px solid #000000">
                                                     <th style="padding:8px">
@@ -200,7 +189,7 @@
                                         </table>
                                     </t>
                                     <t t-if="o.get_discount()[0] == False">
-                                        <table style="width:40%; border:1px solid Transparent; float:right">
+                                        <table style="width:40%; border:1px solid Transparent; float:right; font-size:11px">
                                             <thead>
                                                 <tr style="border-bottom:1px solid #000000; border-top:1px solid #000000">
                                                     <th style="padding:8px">
@@ -239,24 +228,21 @@
                             
                                     
                             <br/>
-                            <div style="width:100%; text-align:center; padding:5px">
+                            <div style="width:100%; text-align:center; padding:5px; font-size:11px">
                                 <p>
                                     OBSERVACIONES: DESCUENTO APLICA UNICAMENTE EN PAGO CON TRANSFERENCIA. 
                                     <br/><br/>
-                                    Al aprobar este contrato estará aceptando las especificaciones del mismo. No se aceptan devoluciones de la mercadería. Por favor revisar cuidadosamente cada
-                                    articulo. No hay devolución en telas cortadas. Las telas dependiendo de su composición pueden encoger hasta un 5%, recomendamos pré-lavarlas antes de
-                                    confeccionarlas si son fibras naturales.
                                 </p>
                             </div>
 
                             <p style="page-break-before: always"/>
-                            <div style="width:100%; text-align:center"><strong> CLAÚSULAS DE ENTREGA DE MUEBLES – BAZZAR FABRICS </strong></div><br/>
-                            <div style="width:100%; text-align:center"> Al aprobar este contrato, el cliente acepta las especificaciones detalladas.<br/>
+                            <div style="width:100%; text-align:center; font-size:11px"><strong> CLAÚSULAS DE ENTREGA DE MUEBLES – BAZZAR FABRICS </strong></div><br/>
+                            <div style="width:100%; text-align:center; font-size:11px"> Al aprobar este contrato, el cliente acepta las especificaciones detalladas.<br/>
                             No se aceptan devoluciones de muebles fabricados. Tampoco se aceptan devoluciones de telas cortadas.<br/>
                             Estas pueden encoger hasta un 5% según su composición.<br/>
                             Por favor, revise cuidadosamente cada artículo antes de confirmar. </div><br/><br/>
 
-                            <div style="width:100%;">
+                            <div style="width:100%; font-size:11px">
                                 <p>
                                     <strong>CONDICIONES DE ENTREGA </strong><br/><br/>
                                     <strong>A)</strong> El cliente (o su decorador / arquitecto) es reponsable de verificar que las medidas del mueble permitan su ingreso al inmueble <br/><br/>
@@ -270,7 +256,7 @@
                                 </p>
                                 </div>
                                 
-                                <div style="width:100%;text-align:center">Agradecemos su preferencia y le pedimos tomar en cuenta estas condiciones para asegurar una entrega exitosa.<br/><br/><br/><br/>
+                                <div style="width:100%;text-align:center; font-size:11px">Agradecemos su preferencia y le pedimos tomar en cuenta estas condiciones para asegurar una entrega exitosa.<br/><br/><br/><br/>
                                 
                                 <div style="width: 100%; text-align: center;">
                                     <hr style="color: gray; width: 50%; margin: auto;"/>
@@ -282,8 +268,9 @@
 
                         <div class="footer">
                             <div style="width:100%; border:2px solid #000000"/>
-                            <p style="font-size:11px; text-align:center">
-                                <strong>Metodos de pago BI Q | </strong> GRUPO DIRECTO 092-000883-6, <strong>BAC Q | </strong> GRUPO DIRECTO 902156785, <strong>BI $ | </strong> ZIMATEX S.A 004-004937-9, <strong>✔</strong> VISALINK
+                            <p style="font-size:13px; text-align:center">
+                                <strong>Metodos de pago BI Q | </strong> GRUPO DIRECTO 092-000883-6, <strong>BAC Q | </strong> GRUPO DIRECTO 902156785, <strong>BI $ 
+                                    <br/></strong> ZIMATEX S.A 004-004937-9, <strong>✔</strong> VISALINK
                             </p>
                             <table style="width:100%; border:1px solid Transparent">
                                 <tr style="text-align:center">

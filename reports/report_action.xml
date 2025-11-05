@@ -7,9 +7,9 @@
             <field name="name">Custom Pos Order Format Landscape</field>
             <field name="format">A4</field>
             <field name="orientation">Portrait</field>
-            <field name="header_spacing">52</field>
+            <field name="header_spacing">35</field>
             <field name="dpi">90</field>
-            <field name="margin_top">52</field>
+            <field name="margin_top">35</field>
             <field name="margin_bottom">32</field>
             <field name="margin_left">20</field>
             <field name="margin_right">20</field>
