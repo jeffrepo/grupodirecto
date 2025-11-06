@@ -42,7 +42,7 @@
                                             TELEFONO
                                         </strong>
                                     </td>
-                                    <td style="background:#000000; color:#FFFFFF; text-align:center; border: 1px solid #000000">
+                                    <td>
                                         <strong>
                                             FECHA DE ENTREGA
                                         </strong>                                        
@@ -55,7 +55,7 @@
                                     <td>
                                         <t t-esc="o.partner_id.mobile if o.partner_id.mobile else o.partner_id.phone"/>
                                     </td>
-                                    <td style="text-align:center; border: 1px solid #000000">
+                                    <td>
                                         <t t-esc="o.commitment_date.strftime('%d/%m/%Y') if o.commitment_date else o.commitment_date"/>
                                     </td>
                                 </tr>
@@ -256,7 +256,7 @@
                                 </p>
                                 </div>
                                 
-                                <div style="width:100%;text-align:center; font-size:11px">Agradecemos su preferencia y le pedimos tomar en cuenta estas condiciones para asegurar una entrega exitosa.<br/><br/><br/><br/>
+                                <div style="width:100%;text-align:center; font-size:11px">Agradecemos su preferencia y le pedimos tomar en cuenta estas condiciones para asegurar una entrega exitosa.<br/><br/><br/><br/><br/><br/><br/><br/>
                                 
                                 <div style="width: 100%; text-align: center;">
                                     <hr style="color: gray; width: 50%; margin: auto;"/>
