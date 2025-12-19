@@ -19,7 +19,7 @@ Long description of module's purpose
     'license': 'LGPL-3',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale', 'stock', 'purchase'],
+    'depends': ['base', 'sale', 'stock', 'purchase','account','product'],
 
     # always loaded
     'data': [
@@ -33,7 +33,7 @@ Long description of module's purpose
         
         'views/product_template_views.xml',
         'views/purchase_order_views.xml',
-        
+        "views/gd_reportes_ventas_wizard_views.xml",
         'views/sale_order_views.xml',
     ],
     # only loaded in demonstration mode
