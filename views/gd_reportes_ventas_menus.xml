@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Menú padre -->
+    <menuitem
+        id="menu_gd_reportes_ventas_root"
+        name="Reportes Grupo Directo"
+        parent="sale.menu_sale_report"
+        sequence="90"
+        groups="sales_team.group_sale_manager"/>
+
+    <!-- Reporte #1 -->
+    <menuitem
+        id="menu_gd_top_productos_proveedor"
+        name="Artículos más/menos vendidos por proveedor"
+        parent="menu_gd_reportes_ventas_root"
+        action="action_gd_top_productos_proveedor_wizard"
+        sequence="10"
+        groups="sales_team.group_sale_manager"/>
+
+    <!-- Reporte #2 -->
+    <menuitem
+        id="menu_gd_reporte2_libro_inventario_comparativo"
+        name="Libro de Inventario (Comparativo)"
+        parent="menu_gd_reportes_ventas_root"
+        action="action_gd_libro_inventario_comparativo_wizard"
+        sequence="110"
+        groups="sales_team.group_sale_manager"/>
+
+</odoo>

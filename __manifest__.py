@@ -33,8 +33,10 @@ Long description of module's purpose
         
         'views/product_template_views.xml',
         'views/purchase_order_views.xml',
-        "views/gd_reportes_ventas_wizard_views.xml",
+        "wizards/gd_top_productos_proveedor_views.xml",
+        "wizards/gd_libro_inventario_comparativo_views.xml",
         'views/sale_order_views.xml',
+        "views/gd_reportes_ventas_menus.xml",
     ],
     # only loaded in demonstration mode
     'demo': [
