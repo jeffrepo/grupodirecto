@@ -36,6 +36,7 @@ Long description of module's purpose
         "wizards/gd_top_productos_proveedor_views.xml",
         "wizards/gd_libro_inventario_comparativo_views.xml",
         "wizards/gd_resumen_inventario_views.xml",
+        "wizards/gd_stock_por_img_views.xml",
         'views/sale_order_views.xml',
         "views/gd_reportes_ventas_menus.xml",
     ],
