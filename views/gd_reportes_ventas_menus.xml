@@ -27,4 +27,13 @@
         sequence="110"
         groups="sales_team.group_sale_manager"/>
 
+    <!-- Reporte #3 -->
+    <menuitem
+        id="menu_gd_resumen_inventario"
+        name="Resumen de Inventario"
+        parent="menu_gd_reportes_ventas_root"
+        action="action_gd_resumen_inventario_wizard"
+        sequence="120"
+        groups="sales_team.group_sale_manager"/>
+
 </odoo>
