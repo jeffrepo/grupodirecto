@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Wizard View -->
+    <record id="view_gd_top_productos_proveedor_wizard_form" model="ir.ui.view">
+        <field name="name">gd.top.productos.proveedor.wizard.form</field>
+        <field name="model">gd.top.productos.proveedor.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Artículos más/menos vendidos por proveedor" create="0" edit="0">
+                <group>
+                    <group>
+                        <field name="company_id"/>
+                        <field name="supplier_id"/>
+                    </group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                </group>
+
+                <group>
+                    <field name="limit_products"/>
+                    <field name="order_mode"/>
+                </group>
+
+                <footer>
+                    <button string="Descargar Excel" type="object" name="action_download_excel" class="btn-primary"/>
+                    <button string="Cerrar" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_gd_top_productos_proveedor_wizard" model="ir.actions.act_window">
+        <field name="name">Artículos más/menos vendidos por proveedor</field>
+        <field name="res_model">gd.top.productos.proveedor.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

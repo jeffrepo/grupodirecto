@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_gd_libro_inventario_comparativo_wizard_form" model="ir.ui.view">
+        <field name="name">gd.libro.inventario.comparativo.wizard.form</field>
+        <field name="model">gd.libro.inventario.comparativo.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Libro de Inventario - Comparativo por Proveedor">
+                <group>
+                    <field name="company_id" options="{'no_create': True}"/>
+                    <field name="supplier_id" options="{'no_create': True}"/>
+                </group>
+
+                <group string="Fecha actual">
+                    <field name="date_from_current"/>
+                    <field name="date_to_current"/>
+                </group>
+
+                <group string="Fecha a comparar">
+                    <field name="date_from_compare"/>
+                    <field name="date_to_compare"/>
+                </group>
+
+                <footer>
+                    <button name="action_download_excel" type="object" string="Descargar Excel" class="btn-primary"/>
+                    <button string="Cancelar" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gd_libro_inventario_comparativo_wizard" model="ir.actions.act_window">
+        <field name="name">Libro de Inventario (Comparativo)</field>
+        <field name="res_model">gd.libro.inventario.comparativo.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
